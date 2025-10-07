@@ -23,13 +23,14 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.24.3'
+        channel: 'stable'
 
     # Buyer App
     - name: Prepare and Build Buyer APK
       run: |
         cd soma_buyer
-        flutter create . --force
         git checkout HEAD -- pubspec.yaml lib/
+        flutter create --platforms android .
         # Add permissions for BLE and QR
         sed -i 's/<\/manifest>/    <uses-permission android:name="android.permission.BLUETOOTH" \/>\n    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" \/>\n    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" \/>\n    <uses-permission android:name="android.permission.CAMERA" \/>\n    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" \/>\n    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" \/>\n<\/manifest>/' android/app/src/main/AndroidManifest.xml
         flutter pub get
@@ -39,8 +40,8 @@ jobs:
     - name: Prepare and Build Seller APK
       run: |
         cd soma_seller
-        flutter create . --force
         git checkout HEAD -- pubspec.yaml lib/
+        flutter create --platforms android .
         # Add same permissions
         sed -i 's/<\/manifest>/    <uses-permission android:name="android.permission.BLUETOOTH" \/>\n    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" \/>\n    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" \/>\n    <uses-permission android:name="android.permission.CAMERA" \/>\n    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" \/>\n    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" \/>\n<\/manifest>/' android/app/src/main/AndroidManifest.xml
         flutter pub get
