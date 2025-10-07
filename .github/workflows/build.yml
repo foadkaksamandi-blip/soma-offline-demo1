@@ -1,0 +1,48 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.3'  # نسخه Flutter (می‌تونی آپدیت کنی)
+
+    - name: Get Flutter dependencies
+      run: |
+        cd soma_buyer && flutter pub get
+        cd ../soma_seller && flutter pub get
+
+    - name: Build Buyer APK
+      run: cd soma_buyer && flutter build apk --release
+
+    - name: Build Seller APK
+      run: cd soma_seller && flutter build apk --release
+
+    - name: Upload Buyer APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: soma-buyer-apk
+        path: soma_buyer/build/app/outputs/flutter-apk/app-release.apk
+
+    - name: Upload Seller APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: soma-seller-apk
+        path: soma_seller/build/app/outputs/flutter-apk/app-release.apk
