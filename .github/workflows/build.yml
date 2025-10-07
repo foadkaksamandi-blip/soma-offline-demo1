@@ -22,7 +22,18 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.24.3'  # نسخه Flutter (می‌تونی آپدیت کنی)
+        flutter-version: '3.24.3'
+
+    # Create Flutter projects (fix: build structure)
+    - name: Create Buyer Project
+      run: |
+        cd soma_buyer
+        flutter create --project-name soma_buyer --org com.example --description "SOMA Buyer App" .
+
+    - name: Create Seller Project
+      run: |
+        cd soma_seller
+        flutter create --project-name soma_seller --org com.example --description "SOMA Seller App" .
 
     - name: Get Flutter dependencies
       run: |
