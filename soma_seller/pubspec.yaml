@@ -1,0 +1,30 @@
+name: soma_seller
+description: SOMA Seller App Demo
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_blue_plus: ^1.32.9  # BLE
+  permission_handler: ^11.0.1  # Permissions
+  qr_flutter: ^4.1.0  # QR Generate
+  qr_code_scanner: ^1.0.1  # QR Scan
+  sqflite: ^2.3.0  # SQLite
+  path: ^1.8.3
+  encrypt: ^5.0.1  # AES Encryption
+  uuid: ^4.2.1  # Txn ID
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
