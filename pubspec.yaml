@@ -1,0 +1,28 @@
+name: demo_soma_offline
+description: A Flutter demo for SOMA Offline with Buyer and Seller apps.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+  flutter: "3.19.6"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_blue_plus: ^1.36.6  # Updated to fix compileSdkVersion error
+  shared_preferences: ^2.3.2
+  permission_handler: ^11.3.1  # Updated for better Android 14 support
+  intl: ^0.19.0
+  qr_flutter: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
