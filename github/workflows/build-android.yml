@@ -1,0 +1,54 @@
+name: Build Android APKs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Java 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Set up Flutter 3.19.6
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.6'
+        channel: 'stable'
+
+    - name: Flutter clean, get, and upgrade
+      run: |
+        flutter clean
+        flutter pub get
+        flutter pub upgrade  # Ensures latest compatible versions
+
+    - name: Build Buyer APK
+      run: flutter build apk --release --target=lib/buyer_main.dart
+      working-directory: .
+
+    - name: Rename Buyer APK
+      run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/buyer.apk
+
+    - name: Build Seller APK
+      run: flutter build apk --release --target=lib/seller_main.dart
+
+    - name: Rename Seller APK
+      run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/seller.apk
+
+    - name: Upload APKs as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: soma-apks
+        path: |
+          build/app/outputs/flutter-apk/buyer.apk
+          build/app/outputs/flutter-apk/seller.apk
+        retention-days: 30
